@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../images/favicon-32x32.png"
+    />
+    <title>
+      Frontend Mentor - REST Countries API with color theme switcher
+    </title>
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- My styles -->
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <header class="">
+      <h1 class="header__title">Where in the world?</h1>
+      <div class="mode-switcher" id="mode-switcher">
+        <img
+          class="mode-switcher__moon-img"
+          id="moon-img"
+          src="../images/moon-light-mode.svg"
+          alt=""
+        />
+        <p class="mode-switcher__text" id="mode-switcher-text">
+          <span>Dark mode</span>
+        </p>
+      </div>
+    </header>
+    <main>
+      <nav class="search-box">
+        <form id="form-search">
+          <label for="search-text" class="visually-hidden"
+            >Search for a country</label
+          >
+          <input
+            class="search-box__text-input"
+            id="search-text"
+            type="text"
+            name="search"
+            placeholder="Search for a country..."
+          />
+          <button type="submit">Search</button>
+        </form>
+        <label for="search-filter" class="visually-hidden">Filter by region</label>
+        <select class="search-box__filter" id="search-filter" name="filter">
+          <option class="filter-first-option" value="" selected>
+            Filter by Region
+          </option>
+          <option value="africa">Africa</option>
+          <option value="america">America</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europe</option>
+          <option value="oceania">Oceania</option>
+        </select>
+      </nav>
+      <div class="cards-container" id="cards-container"></div>
+    </main>
+    <script src="../dist/bundle.js"></script>
+  </body>
+</html>
