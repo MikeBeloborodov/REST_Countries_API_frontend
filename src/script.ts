@@ -15,6 +15,42 @@ const $searchText: HTMLInputElement = <HTMLInputElement>$('#search-text')
 const $searchSelect = $('#search-filter')
 const $formSearch = $('#form-search')
 const $cardsContainer: HTMLDivElement = <HTMLDivElement>$('#cards-container')
+const $searchFilter: HTMLSelectElement = <HTMLSelectElement>$('#search-filter')
+
+// Function definitions
+const removeOldCards = (): void => {
+    const cards = document.querySelectorAll('article')
+    cards.forEach((item) => {
+        item.remove()
+    })
+}
+
+const refreshSearchBar = (): void => {
+    $searchText.value = ""
+}
+
+const refreshSelectForm = (): void => {
+    $searchFilter.value = 'init'
+}
+
+const populateCards = (api_data: Array<Country>): void => {
+    api_data.forEach((country: Country) => {
+        const new_card = new Card(country)
+        $cardsContainer.innerHTML += new_card.constructCardElement()
+    })
+    console.log(api_data.length);
+}
+
+const refreshAllSearch = () => {
+    window.onload = () => {
+        refreshSearchBar()
+        refreshSelectForm()
+    }
+}
+
+// Functions execution
+// On window load
+refreshAllSearch()
 
 // Event listeners
 // Switch to Dark Theme
@@ -35,17 +71,22 @@ $modeSwitcher?.addEventListener('click', () => {
 // Search from text input
 $formSearch?.addEventListener('submit', async (event) => {
     event.preventDefault()
+    refreshSelectForm()
     const search_query = $searchText.value
     if (search_query.length > 0) {
-        const cards = document.querySelectorAll('article')
-        cards.forEach((item) => {
-            item.remove()
-        })
+        removeOldCards()
         const resonse = await fetch(BASE_API_URL + 'name/' + search_query + FIELDS_FILTER)
         const api_data: Array<Country> = await resonse.json()
-        api_data.forEach((country: Country) => {
-            const new_card = new Card(country)
-            $cardsContainer.innerHTML += new_card.constructCardElement()
-        })
+        populateCards(api_data)
     }
+})
+
+// Search region
+$searchFilter.addEventListener('change', async (event) => {
+    refreshSearchBar()
+    removeOldCards()
+    const search_query = $searchFilter.value
+    const resonse = await fetch(BASE_API_URL + 'region/' + search_query + FIELDS_FILTER)
+    const api_data: Array<Country> = await resonse.json()
+    populateCards(api_data)
 })
